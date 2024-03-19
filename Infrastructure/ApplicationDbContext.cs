@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Infrastructure;
+
 public class ApplicationDbContext : DbContext
 {
     protected override void OnModelCreating(ModelBuilder modelBuilder)

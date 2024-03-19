@@ -1,4 +1,4 @@
-﻿using Domain.Abstractions;
+﻿using Application.Abstractions;
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
@@ -38,26 +38,4 @@ public class MoneyTransactionRepository : IMoneyTransactionRepository
     {
         _dbContext.SaveChanges();
     }
-
-    #region IDisposableImpl
-    private bool disposed = false;
-
-    public virtual void Dispose(bool disposing)
-    {
-        if (!disposed)
-        {
-            if (disposing)
-            {
-                _dbContext.Dispose();
-            }
-            disposed = true;
-        }
-    }
-
-    public void Dispose()
-    {
-        Dispose(true);
-        GC.SuppressFinalize(this);
-    }
-    #endregion
 }

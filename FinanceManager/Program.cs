@@ -1,3 +1,7 @@
+using FinanceManager.OptionsSetup;
+using Infrastructure;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+
 namespace FinanceManager;
 
 public class Program
@@ -7,8 +11,14 @@ public class Program
         var builder = WebApplication.CreateBuilder(args);
 
         // Add services to the container.
+        builder.Services.AddInfrastructure(builder.Configuration);
 
         builder.Services.AddControllers();
+
+        builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer();
+
+        builder.Services.ConfigureOptions<JwtOptionsSetup>();
+        builder.Services.ConfigureOptions<JwtBearerOptionsSetup>();
 
         var app = builder.Build();
 

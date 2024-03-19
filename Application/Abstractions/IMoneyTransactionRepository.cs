@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.Abstractions;
+namespace Application.Abstractions;
 
-public interface IMoneyTransactionRepository : IDisposable
+public interface IMoneyTransactionRepository
 {
     List<MoneyTransaction> GetMoneyTransactions();
 
