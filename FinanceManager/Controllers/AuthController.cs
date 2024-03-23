@@ -1,4 +1,7 @@
-﻿using Application.Dtos.User;
+﻿using Application.Abstractions;
+using Application.Dtos.User;
+using Application.Exceptions;
+using FluentValidation;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Authentication;
@@ -8,14 +11,19 @@ namespace FinanceManager.Controllers;
 [ApiController]
 public class AuthController : ControllerBase
 {
+    private readonly IUserService _userService;
+
+    public AuthController(IUserService userService)
+    {
+        _userService = userService;
+    }
+
     [HttpPost]
     public async Task<ActionResult> Register([FromBody] RegisterDto registerDto)
     {
-        var command = new CreateUserCommand(registerDto);
-
         try
         {
-            await _mediator.Send(command, cancellationToken);
+            await _userService.RegisterAsync(registerDto);
         }
         catch (ValidationException ex)
         {
@@ -27,13 +35,11 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("login")]
-    public async Task<ActionResult> Login([FromBody] AuthenticationRequest authenticationRequest, CancellationToken cancellationToken)
+    public async Task<ActionResult> Login([FromBody] AuthenticationRequest authenticationRequest)
     {
-        var command = new AuthenticateUserCommand(authenticationRequest);
-
         try
         {
-            string token = await _mediator.Send(command, cancellationToken);
+            string token = _userService.Authenticate(authenticationRequest);
 
             return Ok(token);
         }

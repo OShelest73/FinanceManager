@@ -1,17 +1,18 @@
-﻿using Domain.Entities;
+﻿using Application.Dtos.User;
+using Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.Abstractions;
+namespace Application.Abstractions;
 
-public interface IAuthenticationService
+public interface IUserService
 {
-    void Register(User user);
+    Task RegisterAsync(RegisterDto userToRegistrate);
 
-    string Authenticate(User user);
+    string Authenticate(AuthenticationRequest request);
 
     string CreatePassword(string password, out byte[] passwordSalt);
 

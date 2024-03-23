@@ -1,7 +1,6 @@
 ﻿using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
-using Application.Abstractions;
-using System.Linq;
+using Domain.Abstractions;
 
 namespace Infrastructure.Repositories;
 
@@ -16,29 +15,39 @@ public class UserRepository : IUserRepository
         _user = _dbContext.Set<User>();
     }
 
-    public User GetUser(Func<User, bool> predicate)
+    public async Task<User> GetUserByIdAsync(int id)
     {
-        var result = _user.FirstOrDefault(predicate);
+        var result = await _user.FirstOrDefaultAsync(u => u.Id == id);
 
         return result;
     }
 
-    public void CreateUser(User user)
+    public async Task<User> GetUserByEmailAsync(string email)
     {
-        _user.Add(user);
-        Save();
+        var result = await _user.FirstOrDefaultAsync(u => u.Email == email);
+
+        return result;
     }
 
-    public void UpdateUser(Func<User, bool> predicate)
+    public async Task CreateUserAsync(User user)
     {
-        var result = GetUser(predicate);
-
-        _user.Update(result);
-        Save();
+        await _user.AddAsync(user);
+        await SaveAsync();
     }
 
-    public void Save()
+    public async Task UpdateUserAsync(User user)
     {
-        _dbContext.SaveChanges();
+        _user.Update(user);
+        await SaveAsync();
+    }
+
+    public async Task<bool> IsEmailUniqueAsync(string email)
+    {
+        return !await _user.AnyAsync(u => u.Email == email);
+    }
+
+    public async Task SaveAsync()
+    {
+        await _dbContext.SaveChangesAsync();
     }
 }
