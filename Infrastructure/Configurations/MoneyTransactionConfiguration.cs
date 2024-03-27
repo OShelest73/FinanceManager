@@ -14,13 +14,20 @@ public class MoneyTransactionConfiguration : IEntityTypeConfiguration<MoneyTrans
         builder.Property(mt => mt.Amount)
             .HasPrecision(18, 4)
             .IsRequired();
+
         builder.Property(mt => mt.Comment).IsRequired(false);
+
         builder.Property(mt => mt.CreatedAt).IsRequired();
+
         builder.HasOne(mt => mt.Wallet)
             .WithMany()
             .IsRequired();
+
         builder.HasOne(mt => mt.Category)
             .WithMany()
             .IsRequired(false);
+
+        builder.HasOne(mt => mt.User)
+            .WithMany();
     }
 }

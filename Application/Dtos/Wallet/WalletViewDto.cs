@@ -4,14 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.Entities;
+namespace Application.Dtos.Wallet;
 
-public class Wallet
+public class WalletViewDto
 {
     public int Id { get; set; }
     public string WalletName { get; set; }
     public decimal MoneyAmount { get; set; }
-
-    public int UserId { get; set; }
-    public User User { get; set; }
 }

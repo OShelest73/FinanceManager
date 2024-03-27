@@ -12,7 +12,7 @@ public interface IUserService
 {
     Task RegisterAsync(RegisterDto userToRegistrate);
 
-    string Authenticate(AuthenticationRequest request);
+    Task<string> Authenticate(AuthenticationRequest request);
 
     string CreatePassword(string password, out byte[] passwordSalt);
 

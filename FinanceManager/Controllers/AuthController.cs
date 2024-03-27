@@ -2,13 +2,16 @@
 using Application.Dtos.User;
 using Application.Exceptions;
 using FluentValidation;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Authentication;
 
 namespace FinanceManager.Controllers;
+
 [Route("api/[controller]")]
 [ApiController]
+[AllowAnonymous]
 public class AuthController : ControllerBase
 {
     private readonly IUserService _userService;
@@ -39,9 +42,9 @@ public class AuthController : ControllerBase
     {
         try
         {
-            string token = _userService.Authenticate(authenticationRequest);
+            string token = await _userService.Authenticate(authenticationRequest);
 
-            return Ok(token);
+            return Ok(new { token = token });
         }
         catch (ValidationException validationEx)
         {

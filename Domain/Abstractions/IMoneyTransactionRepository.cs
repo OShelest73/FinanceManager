@@ -5,15 +5,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Abstractions;
+namespace Domain.Abstractions;
 
 public interface IMoneyTransactionRepository
 {
-    List<MoneyTransaction> GetMoneyTransactions();
+    Task<List<MoneyTransaction>> GetUserTransactionsByCategoryAsync(int userId, int categoryId);
 
-    MoneyTransaction GetMoneyTransaction(Func<MoneyTransaction, bool> predicate);
+    Task<MoneyTransaction> GetTransactionByIdAsync(int id);
 
-    void Remove(Func<MoneyTransaction, bool> predicate);
+    Task CreateTransactionAsync(MoneyTransaction transaction);
 
-    void Save();
+    Task UpdateTransactionAsync(MoneyTransaction transaction);
+
+    Task DeleteTransactionAsync(MoneyTransaction transaction);
+
+    Task SaveAsync();
 }

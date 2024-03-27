@@ -15,5 +15,8 @@ public class WalletConfiguration : IEntityTypeConfiguration<Wallet>
         builder.Property(w => w.MoneyAmount)
             .HasPrecision(18, 4)
             .IsRequired();
+
+        builder.HasOne(w => w.User)
+            .WithMany();
     }
 }
