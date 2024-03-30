@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories;
 
-public class MoneyTransactionRepository : IMoneyTransactionRepository
+public class MoneyTransactionRepository : BaseRepository<MoneyTransaction>, IMoneyTransactionRepository
 {
     private readonly ApplicationDbContext _dbContext;
 
-    public MoneyTransactionRepository(ApplicationDbContext dbContext)
+    public MoneyTransactionRepository(ApplicationDbContext dbContext) : base(dbContext)
     {
         _dbContext = dbContext;
     }
@@ -22,36 +22,46 @@ public class MoneyTransactionRepository : IMoneyTransactionRepository
         return result;
     }
 
-    public async Task<MoneyTransaction> GetTransactionByIdAsync(int id)
+    public override async Task<MoneyTransaction> GetByIdAsync(int id)
     {
-        var result = await _dbContext.Transactions.FirstOrDefaultAsync(mt => mt.Id == id);
+        var result = await _dbContext.Transactions
+            .Include(mt => mt.Category)
+            .Include(mt => mt.Wallet)
+            .FirstOrDefaultAsync(mt => mt.Id == id);
 
         return result;
     }
 
-    public async Task CreateTransactionAsync(MoneyTransaction transaction)
+    public async Task<decimal> CalculateTotalAsync(Category category, int userId)
     {
-        _dbContext.Transactions.Add(transaction);
+        decimal total = 0;
+        total = await _dbContext.Transactions
+            .Where(t => t.Category == category && t.UserId == userId &&
+            t.CreatedAt >= DateTime.Now.AddMonths(-1) && t.CreatedAt <= DateTime.Now)
+            .SumAsync(t => t.Amount);
 
-        await SaveAsync();
+        return total;
     }
 
-    public async Task UpdateTransactionAsync(MoneyTransaction transaction)
+    public async Task<decimal> CalculateTotalIncomeAsync(Category category, int userId, DateTime leftBound, DateTime rightBound)
     {
-        _dbContext.Transactions.Update(transaction);
+        decimal total = 0;
+        total = await _dbContext.Transactions
+            .Where(t => t.Category == category && t.Amount > 0 && t.UserId == userId
+            && t.CreatedAt >= leftBound && t.CreatedAt <= rightBound)
+            .SumAsync(t => t.Amount);
 
-        await SaveAsync();
+        return total;
     }
 
-    public async Task DeleteTransactionAsync(MoneyTransaction transaction)
+    public async Task<decimal> CalculateTotalConsumptionAsync(Category category, int userId, DateTime leftBound, DateTime rightBound)
     {
-        _dbContext.Transactions.Remove(transaction);
+        decimal total = 0;
+        total = await _dbContext.Transactions
+            .Where(t => t.Category == category && t.Amount < 0 && t.UserId == userId
+            && t.CreatedAt >= leftBound && t.CreatedAt <= rightBound)
+            .SumAsync(t => t.Amount);
 
-        await SaveAsync();
-    }
-
-    public async Task SaveAsync()
-    {
-        await _dbContext.SaveChangesAsync();
+        return total;
     }
 }

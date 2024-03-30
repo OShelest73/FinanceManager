@@ -7,17 +7,15 @@ using System.Threading.Tasks;
 
 namespace Domain.Abstractions;
 
-public interface IMoneyTransactionRepository
+public interface IMoneyTransactionRepository : IBaseRepository<MoneyTransaction>
 {
     Task<List<MoneyTransaction>> GetUserTransactionsByCategoryAsync(int userId, int categoryId);
 
-    Task<MoneyTransaction> GetTransactionByIdAsync(int id);
+    Task<MoneyTransaction> GetByIdAsync(int id);
 
-    Task CreateTransactionAsync(MoneyTransaction transaction);
+    Task<decimal> CalculateTotalAsync(Category category, int userId);
 
-    Task UpdateTransactionAsync(MoneyTransaction transaction);
+    Task<decimal> CalculateTotalIncomeAsync(Category category, int userId, DateTime leftBound, DateTime rightBound);
 
-    Task DeleteTransactionAsync(MoneyTransaction transaction);
-
-    Task SaveAsync();
+    Task<decimal> CalculateTotalConsumptionAsync(Category category, int userId, DateTime leftBound, DateTime rightBound);
 }

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Dtos.Wallet;
+namespace Application.Dtos.WalletDtos;
 
 public class WalletViewDto
 {

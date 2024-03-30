@@ -1,4 +1,4 @@
-﻿using Application.Dtos.User;
+﻿using Application.Dtos.UserDtos;
 using Domain.Abstractions;
 using FluentValidation;
 

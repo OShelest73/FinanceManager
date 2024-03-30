@@ -1,6 +1,8 @@
-﻿using Application.Dtos.MoneyTransaction;
+﻿using Application.Dtos.MoneyTransactionDtos;
+using Application.Exceptions;
 using AutoMapper;
 using Domain.Abstractions;
+using Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,5 +29,40 @@ public class MoneyTransactionService
         var viewTransactions = _mapper.Map<List<TransactionPreviewDto>>(dbTransactions);
 
         return viewTransactions;
+    }
+
+    public async Task<TransactionViewDto> GetTransactionByIdAsync(int transactionId)
+    {
+        var dbTransaction = await _transactionRepository.GetByIdAsync(transactionId);
+
+        var viewTransaction = _mapper.Map<TransactionViewDto>(dbTransaction);
+
+        return viewTransaction;
+    }
+
+    public async Task CreateTransaction(CreateTransactionDto transactionDto)
+    {
+        var dbTransaction = _mapper.Map<MoneyTransaction>(transactionDto);
+
+        await _transactionRepository.CreateAsync(dbTransaction);
+    }
+
+    public async Task UpdateTransaction(TransactionViewDto transactionDto)
+    {
+        var dbTransaction = _mapper.Map<MoneyTransaction>(transactionDto);
+
+        await _transactionRepository.UpdateAsync(dbTransaction);
+    }
+
+    public async Task DeleteTransaction(int transactionId)
+    {
+        var transaction = await _transactionRepository.GetByIdAsync(transactionId);
+
+        if (transaction is null)
+        {
+            throw new TransactionNotFoundException(transactionId);
+        }
+
+        await _transactionRepository.DeleteAsync(transaction);
     }
 }

@@ -1,6 +1,6 @@
 ﻿using Application.Abstractions;
 using Application.Authentication;
-using Application.Dtos.User;
+using Application.Dtos.UserDtos;
 using Application.Exceptions;
 using AutoMapper;
 using Domain.Abstractions;
@@ -48,7 +48,7 @@ public class UserService : IUserService
         user.Password = securePassword;
         user.Salt = passwordSalt;
 
-        await _user.CreateUserAsync(user);
+        await _user.CreateAsync(user);
     }
 
     public async Task<string> Authenticate(AuthenticationRequest request)

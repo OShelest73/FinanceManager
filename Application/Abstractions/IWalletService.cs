@@ -1,4 +1,4 @@
-﻿using Application.Dtos.Wallet;
+﻿using Application.Dtos.WalletDtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;

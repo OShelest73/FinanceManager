@@ -1,4 +1,4 @@
-﻿using Application.Dtos.User;
+﻿using Application.Dtos.UserDtos;
 using FluentValidation;
 using System;
 using System.Collections.Generic;

@@ -1,5 +1,5 @@
 ﻿using Application.Abstractions;
-using Application.Dtos.Wallet;
+using Application.Dtos.WalletDtos;
 using Application.Exceptions;
 using AutoMapper;
 using Domain.Abstractions;

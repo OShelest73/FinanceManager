@@ -1,6 +1,8 @@
-﻿using Application.Dtos.MoneyTransaction;
-using Application.Dtos.User;
-using Application.Dtos.Wallet;
+﻿using Application.Dtos.CategoryDtos;
+using Application.Dtos.FinancialGoalDtos;
+using Application.Dtos.MoneyTransactionDtos;
+using Application.Dtos.UserDtos;
+using Application.Dtos.WalletDtos;
 using AutoMapper;
 using Domain.Entities;
 
@@ -16,5 +18,11 @@ public class ApplicationMappingProfile : Profile
         CreateMap<Wallet, WalletViewDto>().ReverseMap();
 
         CreateMap<MoneyTransaction, TransactionPreviewDto>();
+        CreateMap<MoneyTransaction, TransactionViewDto>().ReverseMap();
+        CreateMap<CreateTransactionDto, MoneyTransaction>();
+
+        CreateMap<Category, CategoryDto>().ReverseMap();
+
+        CreateMap<FinancialGoal, FinancialGoalDto>().ReverseMap();
     }
 }

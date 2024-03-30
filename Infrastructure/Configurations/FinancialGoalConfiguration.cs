@@ -14,10 +14,17 @@ public class FinancialGoalConfiguration : IEntityTypeConfiguration<FinancialGoal
         builder.Property(fg => fg.MoneyAmount)
             .HasPrecision(18, 4)
             .IsRequired();
+
         builder.Property(fg => fg.StartDate).IsRequired();
+
         builder.Property(fg => fg.DueDate).IsRequired();
+
         builder.HasOne(fg => fg.Category)
             .WithMany()
             .IsRequired();
+
+        builder.HasOne(fg => fg.User)
+            .WithMany()
+            .IsRequired(false);
     }
 }

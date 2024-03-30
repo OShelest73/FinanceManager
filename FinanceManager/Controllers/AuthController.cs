@@ -1,5 +1,5 @@
 ﻿using Application.Abstractions;
-using Application.Dtos.User;
+using Application.Dtos.UserDtos;
 using Application.Exceptions;
 using FluentValidation;
 using Microsoft.AspNetCore.Authorization;
