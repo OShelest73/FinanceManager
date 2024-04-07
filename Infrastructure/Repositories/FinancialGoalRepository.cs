@@ -1,14 +1,10 @@
-﻿using Domain.Entities;
+﻿using Domain.Abstractions;
+using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Infrastructure.Repositories;
 
-public class FinancialGoalRepository : BaseRepository<FinancialGoal>
+public class FinancialGoalRepository : BaseRepository<FinancialGoal>, IFinancialGoalRepository
 {
     private readonly ApplicationDbContext _dbContext;
 
@@ -20,6 +16,7 @@ public class FinancialGoalRepository : BaseRepository<FinancialGoal>
     public async Task<List<FinancialGoal>> GetUsersGoalsAsync(int userId)
     {
         var result = await _dbContext.Goals
+            .Include(fg => fg.Category)
             .Where(fg => fg.UserId == userId)
             .ToListAsync();
 

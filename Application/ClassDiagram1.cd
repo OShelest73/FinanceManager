@@ -1,0 +1,201 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" GroupingSetting="Access">
+  <Class Name="Application.Services.CategoryService" BaseTypeListCollapsed="true">
+    <Position X="8.25" Y="4.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAABIgAAAAAAAAACAAAAAAAAAAA=</HashCode>
+      <FileName>Services\CategoryService.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_categoryRepository" />
+      <Field Name="_mapper" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Application.Services.FinancialGoalService" BaseTypeListCollapsed="true">
+    <Position X="12.75" Y="2.5" Width="2" />
+    <AssociationLine Name="_mapper" Type="AutoMapper.IMapper" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="14.536" Y="3.796" />
+        <Point X="14.536" Y="4.75" />
+        <Point X="15.5" Y="4.75" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>ACAAAAAAAAAAAAAAAAAhACAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Services\FinancialGoalService.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_goalRepository" />
+      <Field Name="_transactionRepository" />
+      <Field Name="_mapper" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Application.Services.MoneyTransactionService" BaseTypeListCollapsed="true">
+    <Position X="21.25" Y="1.5" Width="2" />
+    <AssociationLine Name="_mapper" Type="AutoMapper.IMapper" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="21.25" Y="3.312" />
+        <Point X="19.554" Y="3.312" />
+        <Point X="19.554" Y="4.844" />
+        <Point X="18.5" Y="4.844" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAACAAAAAAAAAhAAAAAAAAAAAAAAIAAAAAkAA=</HashCode>
+      <FileName>Services\MoneyTransactionService.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_transactionRepository" />
+      <Field Name="_mapper" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Application.Services.UserService" BaseTypeListCollapsed="true">
+    <Position X="16.25" Y="7.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAIAAAIAAAAAJAAIAIAAAAIAgAgAAAAAAAAA=</HashCode>
+      <FileName>Services\UserService.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_user" />
+      <Field Name="_jwtProvider" />
+      <Field Name="_mapper" />
+      <Field Name="_registerDtoValidator" />
+      <Field Name="_authenticationRequestValidator" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Application.Services.WalletService" BaseTypeListCollapsed="true">
+    <Position X="21.25" Y="4" Width="1.75" />
+    <AssociationLine Name="_walletRepository" Type="Domain.Abstractions.IWalletRepository" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="21.25" Y="5.375" />
+        <Point X="20.531" Y="5.375" />
+        <Point X="20.531" Y="5.75" />
+      </Path>
+    </AssociationLine>
+    <AssociationLine Name="_mapper" Type="AutoMapper.IMapper" FixedToPoint="true">
+      <Path>
+        <Point X="21.25" Y="5.188" />
+        <Point X="18.5" Y="5.188" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAAABAAAAAAAAAEAAAIBAAAAAAAAAAAAAAACAAAABAA=</HashCode>
+      <FileName>Services\WalletService.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_walletRepository" />
+      <Field Name="_mapper" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Application.DependencyInjection">
+    <Position X="11.75" Y="6" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DependencyInjection.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Application.Settings.ApplicationMappingProfile">
+    <Position X="14.75" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Settings\ApplicationMappingProfile.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Application.Settings.JwtOptions">
+    <Position X="23.5" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAAAAEAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Settings\JwtOptions.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Application.Validators.AuthenticationRequestValidator">
+    <Position X="22.75" Y="8.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Validators\AuthenticationRequestValidator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Application.Validators.RegisterDtoValidator">
+    <Position X="8.5" Y="0.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Validators\RegisterDtoValidator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="AutoMapper.IMapper">
+    <Position X="15.5" Y="4.25" Width="3" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="Domain.Abstractions.IWalletRepository">
+    <Position X="19" Y="5.75" Width="2" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="Domain.Abstractions.IMoneyTransactionRepository">
+    <Position X="16.5" Y="2" Width="1.5" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="Domain.Abstractions.IFinancialGoalRepository">
+    <Position X="11" Y="1" Width="2" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="Domain.Abstractions.ICategoryRepository">
+    <Position X="12" Y="4" Width="2" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="FluentValidation.IValidator&lt;T&gt;">
+    <Position X="20.5" Y="8" Width="1.5" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="Application.Authentication.IJwtProvider">
+    <Position X="13.5" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAA=</HashCode>
+      <FileName>Authentication\IJwtProvider.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Domain.Abstractions.IUserRepository">
+    <Position X="14.25" Y="6.25" Width="1.75" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="Application.Abstractions.ICategoryService">
+    <Position X="8.5" Y="2.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAIgAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Abstractions\ICategoryService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Application.Abstractions.IFinancialGoalService">
+    <Position X="9" Y="6.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>ACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Abstractions\IFinancialGoalService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Application.Abstractions.IMoneyTransactionService">
+    <Position X="18.25" Y="0.5" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAkAA=</HashCode>
+      <FileName>Abstractions\IMoneyTransactionService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Application.Abstractions.IUserService">
+    <Position X="22.5" Y="6.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAIAAIAIAAAAAAgAAAAAAAAAAA=</HashCode>
+      <FileName>Abstractions\IUserService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Application.Abstractions.IWalletService">
+    <Position X="10.5" Y="8" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAAAAAAAAEAAAIAAAAAAAAAAAAAAAAAAAAABAA=</HashCode>
+      <FileName>Abstractions\IWalletService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

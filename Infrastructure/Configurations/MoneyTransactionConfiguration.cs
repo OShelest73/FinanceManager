@@ -21,7 +21,8 @@ public class MoneyTransactionConfiguration : IEntityTypeConfiguration<MoneyTrans
 
         builder.HasOne(mt => mt.Wallet)
             .WithMany()
-            .IsRequired();
+            .IsRequired()
+            .OnDelete(DeleteBehavior.Restrict);
 
         builder.HasOne(mt => mt.Category)
             .WithMany()

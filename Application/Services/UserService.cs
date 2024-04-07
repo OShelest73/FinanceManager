@@ -6,11 +6,8 @@ using AutoMapper;
 using Domain.Abstractions;
 using Domain.Entities;
 using FluentValidation;
-using FluentValidation.Results;
-using System.Security.Authentication;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading;
 
 namespace Application.Services;
 

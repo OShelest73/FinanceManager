@@ -13,8 +13,13 @@ public static class DependencyInjection
         var assembly = typeof(DependencyInjection).Assembly;
         services.AddValidatorsFromAssembly(assembly);
         services.AddAutoMapper(assembly);
+
         services.AddScoped<IJwtProvider, JwtProvider>();
         services.AddScoped<IUserService, UserService>();
+        services.AddScoped<IWalletService, WalletService>();
+        services.AddScoped<IMoneyTransactionService, MoneyTransactionService>();
+        services.AddScoped<IFinancialGoalService, FinancialGoalService>();
+        services.AddScoped<ICategoryService, CategoryService>();
 
         return services;
     }

@@ -1,17 +1,13 @@
-﻿using Application.Dtos.MoneyTransactionDtos;
+﻿using Application.Abstractions;
+using Application.Dtos.MoneyTransactionDtos;
 using Application.Exceptions;
 using AutoMapper;
 using Domain.Abstractions;
 using Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Services;
 
-public class MoneyTransactionService
+public class MoneyTransactionService : IMoneyTransactionService
 {
     private readonly IMoneyTransactionRepository _transactionRepository;
     private readonly IMapper _mapper;

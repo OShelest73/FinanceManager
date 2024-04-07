@@ -1,15 +1,12 @@
-﻿using Application.Dtos.FinancialGoalDtos;
+﻿using Application.Abstractions;
+using Application.Dtos.FinancialGoalDtos;
 using AutoMapper;
 using Domain.Abstractions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Domain.Entities;
 
 namespace Application.Services;
 
-public class FinancialGoalService
+public class FinancialGoalService : IFinancialGoalService
 {
     private readonly IFinancialGoalRepository _goalRepository;
     private readonly IMoneyTransactionRepository _transactionRepository;
@@ -34,5 +31,12 @@ public class FinancialGoalService
         }
 
         return viewGoals;
+    }
+
+    public async Task CreateFinancialGoal(CreateFinancialGoalDto goalDto)
+    {
+        var dbGoal = _mapper.Map<FinancialGoal>(goalDto);
+
+        await _goalRepository.CreateAsync(dbGoal);
     }
 }

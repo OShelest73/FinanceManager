@@ -4,11 +4,6 @@ using Application.Exceptions;
 using AutoMapper;
 using Domain.Abstractions;
 using Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Services;
 
@@ -23,7 +18,7 @@ public class WalletService : IWalletService
         _mapper = mapper;
     }
 
-    public async Task<List<WalletViewDto>> GetAllUserWalletsAsync(int userId)
+    public async Task<List<WalletViewDto>> GetUserWalletsAsync(int userId)
     {
         var dbWallets = await _walletRepository.GetAllUserWalletsAsync(userId);
 

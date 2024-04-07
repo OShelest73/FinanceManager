@@ -1,5 +1,5 @@
-﻿using Application.Dtos.UserDtos;
-using Microsoft.AspNetCore.Http;
+﻿using Application.Abstractions;
+using Application.Dtos.WalletDtos;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FinanceManager.Controllers;
@@ -7,18 +7,25 @@ namespace FinanceManager.Controllers;
 [ApiController]
 public class WalletController : ControllerBase
 {
-    [HttpPost]
-    public async Task<ActionResult> Register([FromBody] RegisterDto registerDto)
+    private readonly IWalletService _walletService;
+
+    public WalletController(IWalletService walletService)
     {
-        try
-        {
-            await _userService.RegisterAsync(registerDto);
-        }
-        catch (ValidationException ex)
-        {
-            var errors = ex.Errors.Select(error => new { error.PropertyName, error.ErrorMessage });
-            return BadRequest(errors);
-        }
+        _walletService = walletService;
+    }
+
+    [HttpGet]
+    public async Task<ActionResult> GetUserWallets(int userId)
+    {
+        var wallets = await _walletService.GetUserWalletsAsync(userId);
+
+        return Ok(wallets);
+    }
+
+    [HttpPost]
+    public async Task<ActionResult> CreateWallet(CreateWalletDto walletDto)
+    {
+        await _walletService.CreateWalletAsync(walletDto);
 
         return Ok();
     }

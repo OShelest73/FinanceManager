@@ -1,15 +1,11 @@
-﻿using Application.Dtos.CategoryDtos;
+﻿using Application.Abstractions;
+using Application.Dtos.CategoryDtos;
 using AutoMapper;
 using Domain.Abstractions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Services;
 
-public class CategoryService
+public class CategoryService : ICategoryService
 {
     private readonly ICategoryRepository _categoryRepository;
     private readonly IMapper _mapper;

@@ -1,15 +1,10 @@
 ﻿using Application.Dtos.WalletDtos;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Abstractions;
 
 public interface IWalletService
 {
-    Task<List<WalletViewDto>> GetAllUserWalletsAsync(int userId);
+    Task<List<WalletViewDto>> GetUserWalletsAsync(int userId);
 
     Task CreateWalletAsync(CreateWalletDto walletDto);
 

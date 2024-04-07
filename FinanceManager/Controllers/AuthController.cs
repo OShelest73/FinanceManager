@@ -3,9 +3,7 @@ using Application.Dtos.UserDtos;
 using Application.Exceptions;
 using FluentValidation;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Authentication;
 
 namespace FinanceManager.Controllers;
 
