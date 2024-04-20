@@ -22,6 +22,14 @@ public class WalletController : ControllerBase
         return Ok(wallets);
     }
 
+    [HttpGet("select-wallet")]
+    public async Task<ActionResult> GetWalletsToSelect(int userId)
+    {
+        var wallets = await _walletService.GetWalletsToSelectAsync(userId);
+
+        return Ok(wallets);
+    }
+
     [HttpPost]
     public async Task<ActionResult> CreateWallet(CreateWalletDto walletDto)
     {

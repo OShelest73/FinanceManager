@@ -18,6 +18,15 @@ public class MoneyTransactionService : IMoneyTransactionService
         _mapper = mapper;
     }
 
+    public async Task<List<TransactionPreviewDto>> GetUserTransactionsAsync(int userId)
+    {
+        var dbTransactions = await _transactionRepository.GetUserTransactionsAsync(userId);
+
+        var viewTransactions = _mapper.Map<List<TransactionPreviewDto>>(dbTransactions);
+
+        return viewTransactions;
+    }
+
     public async Task<List<TransactionPreviewDto>> GetUserTransactionsByCategoryAsync(int userId, int categoryId)
     {
         var dbTransactions = await _transactionRepository.GetUserTransactionsByCategoryAsync(userId, categoryId);
@@ -36,9 +45,11 @@ public class MoneyTransactionService : IMoneyTransactionService
         return viewTransaction;
     }
 
-    public async Task CreateTransaction(CreateTransactionDto transactionDto)
+    public async Task CreateTransactionAsync(CreateTransactionDto transactionDto)
     {
         var dbTransaction = _mapper.Map<MoneyTransaction>(transactionDto);
+
+        dbTransaction.CreatedAt = DateTime.Now;
 
         await _transactionRepository.CreateAsync(dbTransaction);
     }

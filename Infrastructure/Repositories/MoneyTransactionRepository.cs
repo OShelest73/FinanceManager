@@ -13,6 +13,16 @@ public class MoneyTransactionRepository : BaseRepository<MoneyTransaction>, IMon
         _dbContext = dbContext;
     }
 
+    public async Task<List<MoneyTransaction>> GetUserTransactionsAsync(int userId)
+    {
+        var result = await _dbContext.Transactions
+            .Include(mt => mt.Category)
+            .Where(mt => mt.UserId == userId)
+            .ToListAsync();
+
+        return result;
+    }
+
     public async Task<List<MoneyTransaction>> GetUserTransactionsByCategoryAsync(int userId, int categoryId)
     {
         var result = await _dbContext.Transactions

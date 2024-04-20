@@ -27,6 +27,15 @@ public class WalletService : IWalletService
         return outputList;
     }
 
+    public async Task<List<SelectWalletDto>> GetWalletsToSelectAsync(int userId)
+    {
+        var dbWallets = await _walletRepository.GetAllUserWalletsAsync(userId);
+
+        var outputList = _mapper.Map<List<SelectWalletDto>>(dbWallets);
+
+        return outputList;
+    }
+
     public async Task CreateWalletAsync(CreateWalletDto walletDto)
     {
         var dbWallet = _mapper.Map<Wallet>(walletDto);

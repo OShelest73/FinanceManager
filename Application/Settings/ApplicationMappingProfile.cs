@@ -16,6 +16,7 @@ public class ApplicationMappingProfile : Profile
         CreateMap<AuthenticationRequest, User>().ReverseMap();
 
         CreateMap<Wallet, WalletViewDto>().ReverseMap();
+        CreateMap<Wallet, SelectWalletDto>();
         CreateMap<CreateWalletDto, Wallet>();
 
         CreateMap<MoneyTransaction, TransactionPreviewDto>();

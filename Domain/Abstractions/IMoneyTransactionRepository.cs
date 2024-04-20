@@ -4,6 +4,8 @@ namespace Domain.Abstractions;
 
 public interface IMoneyTransactionRepository : IBaseRepository<MoneyTransaction>
 {
+    Task<List<MoneyTransaction>> GetUserTransactionsAsync(int userId);
+
     Task<List<MoneyTransaction>> GetUserTransactionsByCategoryAsync(int userId, int categoryId);
 
     Task<MoneyTransaction> GetByIdAsync(int id);
