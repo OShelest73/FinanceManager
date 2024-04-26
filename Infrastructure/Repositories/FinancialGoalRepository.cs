@@ -13,6 +13,15 @@ public class FinancialGoalRepository : BaseRepository<FinancialGoal>, IFinancial
         _dbContext = dbContext;
     }
 
+    public async Task<FinancialGoal> GetGoalWihCategoryAsync(int goalId)
+    {
+        var result = await _dbContext.Goals
+            .Include(fg => fg.Category)
+            .FirstOrDefaultAsync();
+
+        return result;
+    }
+
     public async Task<List<FinancialGoal>> GetUsersGoalsAsync(int userId)
     {
         var result = await _dbContext.Goals

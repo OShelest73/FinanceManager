@@ -18,6 +18,15 @@ public class WalletService : IWalletService
         _mapper = mapper;
     }
 
+    public async Task<WalletViewDto> GetWalletDetailedAsync(int walletId)
+    {
+        var dbWallet = await _walletRepository.GetByIdAsync(walletId);
+
+        var walletDetailed = _mapper.Map<WalletViewDto>(dbWallet);
+
+        return walletDetailed;
+    }
+
     public async Task<List<WalletViewDto>> GetUserWalletsAsync(int userId)
     {
         var dbWallets = await _walletRepository.GetAllUserWalletsAsync(userId);
@@ -40,25 +49,25 @@ public class WalletService : IWalletService
     {
         var dbWallet = _mapper.Map<Wallet>(walletDto);
 
-        await _walletRepository.CreateWalletAsync(dbWallet);
+        await _walletRepository.CreateAsync(dbWallet);
     }
 
     public async Task UpdateWalletAsync(UpdateWalletDto walletDto)
     {
         var dbWallet = _mapper.Map<Wallet>(walletDto);
 
-        await _walletRepository.UpdateWalletAsync(dbWallet);
+        await _walletRepository.UpdateAsync(dbWallet);
     }
 
     public async Task DeleteWalletAsync(int id)
     {
-        var wallet = await _walletRepository.GetWalletByIdAsync(id);
+        var wallet = await _walletRepository.GetByIdAsync(id);
 
         if (wallet == null)
         {
             throw new WalletNotFoundException(id);
         }
 
-        await _walletRepository.DeleteWalletAsync(wallet);
+        await _walletRepository.DeleteAsync(wallet);
     }
 }

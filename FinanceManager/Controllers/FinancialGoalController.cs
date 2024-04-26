@@ -22,6 +22,14 @@ public class FinancialGoalController : ControllerBase
         return Ok(goals);
     }
 
+    [HttpGet("get-detailed")]
+    public async Task<ActionResult> GetFinancialGoalDetailed(int goalId, int userId)
+    {
+        var goal = await _goalService.GetGoalDetailedAsync(goalId, userId);
+
+        return Ok(goal);
+    }
+
     [HttpPost]
     public async Task<ActionResult> CreateFinancialGoal(CreateFinancialGoalDto goalDto)
     {

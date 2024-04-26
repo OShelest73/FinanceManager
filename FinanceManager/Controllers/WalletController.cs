@@ -14,6 +14,14 @@ public class WalletController : ControllerBase
         _walletService = walletService;
     }
 
+    [HttpGet("get-detailed")]
+    public async Task<ActionResult> GetUserWalletDetailed(int walletId)
+    {
+        var wallet = await _walletService.GetWalletDetailedAsync(walletId);
+
+        return Ok(wallet);
+    }
+
     [HttpGet]
     public async Task<ActionResult> GetUserWallets(int userId)
     {

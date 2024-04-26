@@ -8,6 +8,10 @@ public interface IMoneyTransactionRepository : IBaseRepository<MoneyTransaction>
 
     Task<List<MoneyTransaction>> GetUserTransactionsByCategoryAsync(int userId, int categoryId);
 
+    Task<List<MoneyTransaction>> GetUserIncomeByCategoryAsync(int userId, int categoryId, DateTime startDate, DateTime dueDate);
+
+    Task<List<MoneyTransaction>> GetUserConsumptionsByCategoryAsync(int userId, int categoryId, DateTime startDate, DateTime dueDate);
+
     Task<MoneyTransaction> GetByIdAsync(int id);
 
     Task<decimal> CalculateTotalAsync(Category category, int userId);

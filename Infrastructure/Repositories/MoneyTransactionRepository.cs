@@ -32,6 +32,36 @@ public class MoneyTransactionRepository : BaseRepository<MoneyTransaction>, IMon
         return result;
     }
 
+    public async Task<List<MoneyTransaction>> GetUserIncomeByCategoryAsync(int userId, int categoryId, DateTime startDate, DateTime dueDate)
+    {
+        var result = await _dbContext.Transactions
+            .Include(mt => mt.Category)
+            .Where(mt => 
+                mt.UserId == userId && 
+                mt.CategoryId == categoryId &&
+                mt.CreatedAt >= startDate &&
+                mt.CreatedAt <= dueDate &&
+                mt.Amount > 0)
+            .ToListAsync();
+
+        return result;
+    }
+
+    public async Task<List<MoneyTransaction>> GetUserConsumptionsByCategoryAsync(int userId, int categoryId, DateTime startDate, DateTime dueDate)
+    {
+        var result = await _dbContext.Transactions
+            .Include(mt => mt.Category)
+            .Where(mt =>
+                mt.UserId == userId &&
+                mt.CategoryId == categoryId &&
+                mt.CreatedAt >= startDate &&
+                mt.CreatedAt <= dueDate &&
+                mt.Amount < 0)
+            .ToListAsync();
+
+        return result;
+    }
+
     public override async Task<MoneyTransaction> GetByIdAsync(int id)
     {
         var result = await _dbContext.Transactions

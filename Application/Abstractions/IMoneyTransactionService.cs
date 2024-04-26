@@ -1,13 +1,14 @@
 ﻿using Application.Dtos.MoneyTransactionDtos;
 
 namespace Application.Abstractions;
+
 public interface IMoneyTransactionService
 {
     Task<List<TransactionPreviewDto>> GetUserTransactionsAsync(int userId);
 
     Task<TransactionViewDto> GetTransactionByIdAsync(int transactionId);
 
-    Task<List<TransactionPreviewDto>> GetUserTransactionsByCategoryAsync(int userId, int categoryId);
+    Task<List<TransactionPreviewDto>> GetUserTransactionsByCategoryAsync(int userId, int categoryId, bool isIncome, DateTime startDate, DateTime dueDate);
 
     Task CreateTransactionAsync(CreateTransactionDto transactionDto);
 

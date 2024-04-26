@@ -23,10 +23,34 @@ public class MoneyTransactionController : ControllerBase
         return Ok(transactions);
     }
 
+    [HttpGet("goal-transactions")]
+    public async Task<ActionResult> GetGoalTransactions(int userId, int goalId, bool isIncome, DateTime startDate, DateTime dueDate)
+    {
+        var transactions = await _moneyTransactionService.GetUserTransactionsByCategoryAsync(userId, goalId, isIncome, startDate, dueDate);
+
+        return Ok(transactions);
+    }
+
+    [HttpGet("detailed-transaction")]
+    public async Task<ActionResult> GetTransactionDetailed(int transactionId)
+    {
+        var transaction = await _moneyTransactionService.GetTransactionByIdAsync(transactionId);
+
+        return Ok(transaction);
+    }
+
     [HttpPost]
     public async Task<ActionResult> CreateMoneyTransaction(CreateTransactionDto transactionDto)
     {
         await _moneyTransactionService.CreateTransactionAsync(transactionDto);
+
+        return Ok();
+    }
+
+    [HttpDelete]
+    public async Task<ActionResult> DeleteTransaction(int transactionId)
+    {
+        await _moneyTransactionService.DeleteTransaction(transactionId);
 
         return Ok();
     }

@@ -27,9 +27,18 @@ public class MoneyTransactionService : IMoneyTransactionService
         return viewTransactions;
     }
 
-    public async Task<List<TransactionPreviewDto>> GetUserTransactionsByCategoryAsync(int userId, int categoryId)
+    public async Task<List<TransactionPreviewDto>> GetUserTransactionsByCategoryAsync(int userId, int categoryId, bool isIncome, DateTime startDate, DateTime dueDate)
     {
-        var dbTransactions = await _transactionRepository.GetUserTransactionsByCategoryAsync(userId, categoryId);
+        List<MoneyTransaction> dbTransactions = new();
+
+        if (isIncome)
+        {
+            dbTransactions = await GetIncomeTransactions(userId, categoryId, startDate, dueDate);
+        }
+        else
+        {
+            dbTransactions = await GetConsumptionTransactions(userId, categoryId, startDate, dueDate);
+        }
 
         var viewTransactions = _mapper.Map<List<TransactionPreviewDto>>(dbTransactions);
 
@@ -47,9 +56,9 @@ public class MoneyTransactionService : IMoneyTransactionService
 
     public async Task CreateTransactionAsync(CreateTransactionDto transactionDto)
     {
-        var dbTransaction = _mapper.Map<MoneyTransaction>(transactionDto);
+        transactionDto.CreatedAt ??= DateTime.Now;
 
-        dbTransaction.CreatedAt = DateTime.Now;
+        var dbTransaction = _mapper.Map<MoneyTransaction>(transactionDto);
 
         await _transactionRepository.CreateAsync(dbTransaction);
     }
@@ -71,5 +80,19 @@ public class MoneyTransactionService : IMoneyTransactionService
         }
 
         await _transactionRepository.DeleteAsync(transaction);
+    }
+
+    private async Task<List<MoneyTransaction>> GetIncomeTransactions(int userId, int categoryId, DateTime startDate, DateTime dueDate)
+    {
+        var result = await _transactionRepository.GetUserIncomeByCategoryAsync(userId, categoryId, startDate, dueDate);
+
+        return result;
+    }
+
+    private async Task<List<MoneyTransaction>> GetConsumptionTransactions(int userId, int categoryId, DateTime startDate, DateTime dueDate)
+    {
+        var result = await _transactionRepository.GetUserConsumptionsByCategoryAsync(userId, categoryId, startDate, dueDate);
+
+        return result;
     }
 }

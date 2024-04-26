@@ -25,12 +25,25 @@ public class FinancialGoalService : IFinancialGoalService
 
         var viewGoals = _mapper.Map<List<FinancialGoalDto>>(dbGoals);
 
-        foreach (var goal in viewGoals)
+        int goalLength = viewGoals.Count;
+
+        for (int i = 0; i < goalLength; i++)
         {
-            goal.CurrentTotal = await _transactionRepository.CalculateTotalAsync(goal.Category, userId);
+            viewGoals[i].CurrentTotal = await CalculateTotal(dbGoals[i], userId);
         }
 
         return viewGoals;
+    }
+
+    public async Task<FinancialGoalDto> GetGoalDetailedAsync(int goalId, int userId)
+    {
+        var dbGoal = await _goalRepository.GetGoalWihCategoryAsync(goalId);
+
+        var viewGoal = _mapper.Map<FinancialGoalDto>(dbGoal);
+
+        viewGoal.CurrentTotal = await CalculateTotal(dbGoal, userId);
+
+        return viewGoal;
     }
 
     public async Task CreateFinancialGoal(CreateFinancialGoalDto goalDto)
@@ -38,5 +51,17 @@ public class FinancialGoalService : IFinancialGoalService
         var dbGoal = _mapper.Map<FinancialGoal>(goalDto);
 
         await _goalRepository.CreateAsync(dbGoal);
+    }
+
+    private async Task<decimal> CalculateTotal(FinancialGoal goal, int userId)
+    {
+        if (goal.MoneyAmount > 0)
+        {
+            return await _transactionRepository.CalculateTotalIncomeAsync(goal.Category, userId, goal.StartDate, goal.DueDate);
+        }
+        else
+        {
+            return await _transactionRepository.CalculateTotalConsumptionAsync(goal.Category, userId, goal.StartDate, goal.DueDate);
+        }
     }
 }
