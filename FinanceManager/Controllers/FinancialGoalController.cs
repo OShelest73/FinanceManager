@@ -37,4 +37,20 @@ public class FinancialGoalController : ControllerBase
 
         return Ok();
     }
+
+    [HttpPut]
+    public async Task<ActionResult> CreateFinancialGoal(UpdateFinancialGoalDto goalDto)
+    {
+        await _goalService.UpdateFinancialGoal(goalDto);
+
+        return Ok();
+    }
+
+    [HttpDelete]
+    public async Task<ActionResult> DeleteFinancialGoal(int goalId)
+    {
+        await _goalService.DeleteFinancialGoal(goalId);
+
+        return Ok();
+    }
 }

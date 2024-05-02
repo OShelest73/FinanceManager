@@ -45,4 +45,20 @@ public class WalletController : ControllerBase
 
         return Ok();
     }
+
+    [HttpPut]
+    public async Task<ActionResult> UpdateWallet(UpdateWalletDto walletDto)
+    {
+        await _walletService.UpdateWalletAsync(walletDto);
+
+        return Ok();
+    }
+
+    [HttpDelete]
+    public async Task<ActionResult> DeleteWallet(int walletId)
+    {
+        await _walletService.DeleteWalletAsync(walletId);
+
+        return Ok();
+    }
 }

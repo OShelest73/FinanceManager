@@ -17,7 +17,7 @@ public class FinancialGoalRepository : BaseRepository<FinancialGoal>, IFinancial
     {
         var result = await _dbContext.Goals
             .Include(fg => fg.Category)
-            .FirstOrDefaultAsync();
+            .FirstOrDefaultAsync(fg => fg.Id == goalId);
 
         return result;
     }
@@ -27,6 +27,20 @@ public class FinancialGoalRepository : BaseRepository<FinancialGoal>, IFinancial
         var result = await _dbContext.Goals
             .Include(fg => fg.Category)
             .Where(fg => fg.UserId == userId)
+            .ToListAsync();
+
+        return result;
+    }
+
+    public async Task<List<FinancialGoal>> GetGoalsByCategoryAsync(int categoryId, DateTime dateTime, int userId)
+    {
+        var result = await _dbContext.Goals
+            .Include(fg => fg.Category)
+            .Where(fg =>
+                fg.UserId == userId &&
+                fg.StartDate <= dateTime &&
+                fg.DueDate >= dateTime &&
+                fg.Category.Id == categoryId)
             .ToListAsync();
 
         return result;

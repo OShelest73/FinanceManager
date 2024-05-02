@@ -19,6 +19,7 @@ public static class DependencyInjection
         services.AddScoped<ICategoryRepository, CategoryRepository>();
         services.AddScoped<IFinancialGoalRepository, FinancialGoalRepository>();
         services.AddScoped<IWalletRepository, WalletRepository>();
+        services.AddScoped<INotificationRepository, NotificationRepository>();
 
         return services;
     }

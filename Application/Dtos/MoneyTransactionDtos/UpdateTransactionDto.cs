@@ -1,7 +1,9 @@
 ﻿namespace Application.Dtos.MoneyTransactionDtos;
 
-public class CreateTransactionDto
+public class UpdateTransactionDto
 {
+    public int  Id { get; set; }
+
     public decimal Amount { get; set; }
 
     public string Comment { get; set; }

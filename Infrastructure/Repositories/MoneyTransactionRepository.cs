@@ -23,6 +23,16 @@ public class MoneyTransactionRepository : BaseRepository<MoneyTransaction>, IMon
         return result;
     }
 
+    public async Task<List<MoneyTransaction>> GetWalletTransactionsAsync(int walletId)
+    {
+        var result = await _dbContext.Transactions
+            .Include(mt => mt.Category)
+            .Where(mt => mt.WalletId == walletId)
+            .ToListAsync();
+
+        return result;
+    }
+
     public async Task<List<MoneyTransaction>> GetUserTransactionsByCategoryAsync(int userId, int categoryId)
     {
         var result = await _dbContext.Transactions
@@ -103,5 +113,33 @@ public class MoneyTransactionRepository : BaseRepository<MoneyTransaction>, IMon
             .SumAsync(t => t.Amount);
 
         return total;
+    }
+
+    public async Task<Dictionary<string, decimal>> TotalConsumptionByCategoriesAsync(int userId)
+    {
+        var totalsByCategory = await _dbContext.Transactions
+            .Where(t => 
+                t.UserId == userId && 
+                t.CreatedAt >= DateTime.Now.AddMonths(-1) && 
+                t.CreatedAt <= DateTime.Now && 
+                t.Amount < 0)
+            .GroupBy(t => t.Category.CategoryName)
+            .ToDictionaryAsync(t => t.Key, t => t.Sum(t => t.Amount));
+
+        return totalsByCategory;
+    }
+
+    public async Task<Dictionary<string, decimal>> TotalIncomeByCategoriesAsync(int userId)
+    {
+        var totalsByCategory = await _dbContext.Transactions
+            .Where(t =>
+                t.UserId == userId &&
+                t.CreatedAt >= DateTime.Now.AddMonths(-1) &&
+                t.CreatedAt <= DateTime.Now &&
+                t.Amount > 0)
+            .GroupBy(t => t.Category.CategoryName)
+            .ToDictionaryAsync(t => t.Key, t => t.Sum(t => t.Amount));
+
+        return totalsByCategory;
     }
 }

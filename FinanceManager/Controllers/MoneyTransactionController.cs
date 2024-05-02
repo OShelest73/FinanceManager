@@ -1,6 +1,5 @@
 ﻿using Application.Abstractions;
 using Application.Dtos.MoneyTransactionDtos;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FinanceManager.Controllers;
@@ -23,6 +22,14 @@ public class MoneyTransactionController : ControllerBase
         return Ok(transactions);
     }
 
+    [HttpGet("wallet-transactions")]
+    public async Task<ActionResult> GetGoalTransactions(int walletId)
+    {
+        var transactions = await _moneyTransactionService.GetWalletTransactionsAsync(walletId);
+
+        return Ok(transactions);
+    }
+
     [HttpGet("goal-transactions")]
     public async Task<ActionResult> GetGoalTransactions(int userId, int goalId, bool isIncome, DateTime startDate, DateTime dueDate)
     {
@@ -39,6 +46,22 @@ public class MoneyTransactionController : ControllerBase
         return Ok(transaction);
     }
 
+    [HttpGet("calculate-total-consumptions")]
+    public async Task<ActionResult> GetTotalConsumptionsByCategories(int userId)
+    {
+        var transaction = await _moneyTransactionService.GetConsumptionsTotalsAsync(userId);
+
+        return Ok(transaction);
+    }
+    [HttpGet("calculate-total-incomes")]
+    public async Task<ActionResult> GetTotalIncomesByCategories(int userId)
+    {
+        var transaction = await _moneyTransactionService.GetIncomesTotalsAsync(userId);
+
+        return Ok(transaction);
+    }
+
+
     [HttpPost]
     public async Task<ActionResult> CreateMoneyTransaction(CreateTransactionDto transactionDto)
     {
@@ -47,10 +70,18 @@ public class MoneyTransactionController : ControllerBase
         return Ok();
     }
 
+    [HttpPut]
+    public async Task<ActionResult> UpdateTransaction(UpdateTransactionDto transactionDto)
+    {
+        await _moneyTransactionService.UpdateTransaction(transactionDto);
+
+        return Ok();
+    }
+
     [HttpDelete]
     public async Task<ActionResult> DeleteTransaction(int transactionId)
     {
-        await _moneyTransactionService.DeleteTransaction(transactionId);
+        await _moneyTransactionService.DeleteTransactionAsync(transactionId);
 
         return Ok();
     }

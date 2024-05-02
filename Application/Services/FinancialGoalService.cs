@@ -53,6 +53,18 @@ public class FinancialGoalService : IFinancialGoalService
         await _goalRepository.CreateAsync(dbGoal);
     }
 
+    public async Task UpdateFinancialGoal(UpdateFinancialGoalDto goalDto)
+    {
+        var dbGoal = _mapper.Map<FinancialGoal>(goalDto);
+
+        await _goalRepository.UpdateAsync(dbGoal);
+    }
+
+    public async Task DeleteFinancialGoal(int goalId)
+    {
+        await _goalRepository.DeleteByIdAsync(goalId);
+    }
+
     private async Task<decimal> CalculateTotal(FinancialGoal goal, int userId)
     {
         if (goal.MoneyAmount > 0)

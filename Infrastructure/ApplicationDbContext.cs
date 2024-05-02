@@ -27,4 +27,5 @@ public class ApplicationDbContext : DbContext
     public DbSet<FinancialGoal> Goals { get; set; }
     public DbSet<MoneyTransaction> Transactions { get; set; }
     public DbSet<User> Users { get; set; }
+    public DbSet<Notification> Notifications { get; set; }
 }
