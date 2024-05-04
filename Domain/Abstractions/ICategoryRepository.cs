@@ -2,9 +2,7 @@
 
 namespace Domain.Abstractions;
 
-public interface ICategoryRepository
+public interface ICategoryRepository : IBaseRepository<Category>
 {
-    Task<List<Category>> GetAllCategoriesAsync();
 
-    Task<Category> GetCategoryByIdAsync(int id);
 }
